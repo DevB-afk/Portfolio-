@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devon Beaver-Byard | Portfolio</title>
+<meta name="description" content="Portfolio of Devon Beaver-Byard: cybersecurity student at Penn State and homelab builder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0f14;
+    --surface: #121821;
+    --surface-2: #19212c;
+    --border: #243040;
+    --text: #e6edf3;
+    --muted: #8b98a8;
+    --accent: #38bdf8;
+    --accent-2: #4ade80;
+    --warn: #fbbf24;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --sans: "Inter", system-ui, sans-serif;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f7f9fb; --surface: #ffffff; --surface-2: #eef2f6; --border: #d6dee8;
+      --text: #0f1720; --muted: #5a6776; --accent: #0284c7; --accent-2: #16a34a; --warn: #b45309;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 var(--sans); }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+  nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent);
+        backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
+  .logo { font-family: var(--mono); font-weight: 600; color: var(--text); }
+  .logo span { color: var(--accent-2); }
+  nav ul { display: flex; gap: 20px; list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  nav ul a { color: var(--muted); }
+  nav ul a:hover { color: var(--text); text-decoration: none; }
+
+  header.hero { padding: 88px 0 64px; }
+  .prompt { font-family: var(--mono); color: var(--accent-2); font-size: 14px; margin-bottom: 12px; }
+  .cursor { display: inline-block; width: 8px; height: 1em; background: var(--accent-2); vertical-align: -2px;
+            animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+  h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.1; margin: 0 0 16px; letter-spacing: -0.02em; }
+  .lede { font-size: 19px; color: var(--muted); max-width: 640px; margin: 0 0 28px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-block; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 15px;
+         border: 1px solid var(--border); color: var(--text); background: var(--surface); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #04121c; }
+  .btn:hover { text-decoration: none; filter: brightness(1.08); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 13px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.12em;
+       color: var(--accent); margin: 0 0 8px; }
+  h3 { font-size: 28px; margin: 0 0 16px; letter-spacing: -0.01em; }
+  p { margin: 0 0 14px; }
+  .muted { color: var(--muted); }
+
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 32px; }
+  .facts { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+           font-family: var(--mono); font-size: 14px; }
+  .facts div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0;
+               border-bottom: 1px dashed var(--border); }
+  .facts div:last-child { border-bottom: 0; }
+  .facts b { color: var(--muted); font-weight: 400; }
+
+  .project { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+  .project-head { padding: 24px 24px 8px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px; }
+  .tag { font-family: var(--mono); font-size: 12px; padding: 3px 10px; border-radius: 999px;
+         background: var(--surface-2); border: 1px solid var(--border); color: var(--muted); }
+  .diagram { background: var(--surface-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+             padding: 20px; }
+  .diagram svg { width: 100%; height: auto; display: block; }
+  .diagram text { font-family: var(--sans); fill: var(--text); }
+  .diagram .sub { fill: var(--muted); font-size: 11px; }
+  .node { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+  .node.hl { stroke: var(--accent); }
+  .node.nas { stroke: var(--accent-2); }
+  .link { stroke: var(--muted); stroke-width: 1.5; fill: none; }
+  .flow { stroke: var(--accent-2); stroke-width: 2; fill: none; stroke-dasharray: 5 4; }
+  .tail { stroke: var(--warn); stroke-width: 1.5; fill: none; stroke-dasharray: 2 4; }
+
+  .project-body { padding: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+  h4 { margin: 0 0 10px; font-size: 16px; }
+  .decisions { padding: 0 24px 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; font-size: 14px; }
+  .card h4 { font-size: 15px; }
+  .roadmap { list-style: none; padding: 0; margin: 0; font-size: 14px; }
+  .roadmap li { padding: 5px 0 5px 26px; position: relative; }
+  .roadmap li::before { content: ""; position: absolute; left: 0; top: 9px; width: 14px; height: 14px;
+                        border: 1.5px solid var(--muted); border-radius: 4px; }
+  .project-foot { padding: 0 24px 24px; }
+
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .skills .card ul { margin: 0; padding-left: 18px; color: var(--muted); }
+
+  .jobs { display: grid; gap: 16px; }
+  .job { padding: 20px; }
+  .job-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 10px; }
+  .job-top h4 { font-size: 17px; margin: 0; }
+  .when { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .job ul { margin: 0; padding-left: 18px; }
+  footer { padding: 40px 0 56px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 760px) {
+    nav ul { gap: 14px; }
+    .about-grid, .project-body, .decisions { grid-template-columns: 1fr; }
+    header.hero { padding: 56px 0 40px; }
+  }
+  @media (max-width: 480px) { nav ul li:nth-child(3), nav ul li:nth-child(4) { display: none; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#">~/<span>devon</span></a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="prompt">devon@homelab:~$ whoami<span class="cursor"></span></div>
+    <h1>Devon Beaver-Byard</h1>
+    <p class="lede">Cybersecurity student at Penn State, working toward penetration testing and network engineering. I build and run my own home server infrastructure to learn by doing.</p>
+    <div class="btns">
+      <a class="btn primary" href="#projects">See my work</a>
+      <a class="btn" href="resume.pdf">Resume</a>
+      <a class="btn" href="https://github.com/DevB-afk">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div>
+      <h2>About</h2>
+      <h3>Learning security by building the network first</h3>
+      <p>I'm a cybersecurity student at Penn State. My goal is a career in penetration testing and network engineering, and I'm currently working toward the CCNA and CompTIA Security+ (A+ coursework completed).</p>
+      <p>To defend or test a network, you have to understand how one is built. That's why I run a multi-machine homelab with virtualization, network storage, and a self-hosted media server. It's where I practice Linux, networking, and infrastructure by actually breaking and fixing things.</p>
+    </div>
+    <div class="facts" aria-label="Quick facts">
+      <div><b>school</b><span>Penn State</span></div>
+      <div><b>major</b><span>Cybersecurity</span></div>
+      <div><b>certs</b><span>CCNA · Security+ (in progress)</span></div>
+      <div><b>goal</b><span>Pentest · Net eng</span></div>
+      <div><b>uptime</b><span style="color:var(--accent-2)">● homelab online</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Featured project</h2>
+    <div class="project">
+      <div class="project-head">
+        <h3>🏠 Homelab &amp; DevFlix media server</h3>
+        <p class="muted">A five-machine home infrastructure built from repurposed desktops and Raspberry Pis. It digitizes my Blu-ray, DVD, and digital movie collection and streams it anywhere through <b>DevFlix</b>, a self-hosted Jellyfin server.</p>
+        <div class="tags">
+          <span class="tag">Proxmox VE</span><span class="tag">OpenMediaVault</span><span class="tag">Jellyfin</span>
+          <span class="tag">Tailscale</span><span class="tag">Raspberry Pi</span><span class="tag">Linux</span><span class="tag">Networking</span>
+        </div>
+      </div>
+
+      <div class="diagram" role="img" aria-label="Network diagram: Asus router connects to a managed switch, which connects the Proxmox host, OMV NAS, HP ProDesk ripping station, and two Raspberry Pis. Ripped media flows to the NAS, and the NAS share feeds the DevFlix Jellyfin container on Proxmox. Tailscale provides remote access.">
+        <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg">
+          <!-- links -->
+          <path class="link" d="M450 58 V92"/>
+          <path class="link" d="M450 132 V160 M110 160 H790 M110 160 V196 M290 160 V196 M450 160 V196 M630 160 V196 M790 160 V196"/>
+          <!-- media flow -->
+          <path class="flow" d="M520 236 Q540 290 380 290 Q340 290 330 252"/>
+          <path class="flow" d="M250 252 Q240 300 160 300 Q120 300 110 280"/>
+          <!-- tailscale -->
+          <path class="tail" d="M760 40 Q600 20 460 30"/>
+
+          <!-- router -->
+          <rect class="node" x="380" y="18" width="140" height="40" rx="8"/>
+          <text x="450" y="43" text-anchor="middle" font-size="14" font-weight="600">Asus router</text>
+          <!-- switch -->
+          <rect class="node" x="370" y="92" width="160" height="40" rx="8"/>
+          <text x="450" y="117" text-anchor="middle" font-size="14" font-weight="600">Managed switch</text>
+
+          <!-- proxmox -->
+          <rect class="node hl" x="30" y="196" width="160" height="84" rx="10"/>
+          <text x="110" y="220" text-anchor="middle" font-size="14" font-weight="600">Proxmox VE</text>
+          <text class="sub" x="110" y="237" text-anchor="middle">Dell Inspiron 3668 + GPU</text>
+          <rect x="50" y="248" width="120" height="24" rx="6" fill="none" stroke="var(--accent)" stroke-width="1.2"/>
+          <text x="110" y="265" text-anchor="middle" font-size="12" font-weight="600" style="fill:var(--accent)">DevFlix · Jellyfin</text>
+
+          <!-- nas -->
+          <rect class="node nas" x="210" y="196" width="160" height="56" rx="10"/>
+          <text x="290" y="220" text-anchor="middle" font-size="14" font-weight="600">OMV NAS</text>
+          <text class="sub" x="290" y="238" text-anchor="middle">Dell OptiPlex · storage</text>
+
+          <!-- ripper -->
+          <rect class="node" x="390" y="196" width="160" height="56" rx="10"/>
+          <text x="470" y="220" text-anchor="middle" font-size="14" font-weight="600">Ripping station</text>
+          <text class="sub" x="470" y="238" text-anchor="middle">HP ProDesk 400 G1 Mini</text>
+
+          <!-- pis -->
+          <rect class="node" x="570" y="196" width="120" height="56" rx="10"/>
+          <text x="630" y="220" text-anchor="middle" font-size="14" font-weight="600">Raspberry Pi</text>
+          <text class="sub" x="630" y="238" text-anchor="middle">utilities</text>
+          <rect class="node" x="730" y="196" width="120" height="56" rx="10"/>
+          <text x="790" y="220" text-anchor="middle" font-size="14" font-weight="600">Raspberry Pi</text>
+          <text class="sub" x="790" y="238" text-anchor="middle">utilities</text>
+
+          <!-- tailscale -->
+          <rect x="760" y="20" width="120" height="36" rx="18" fill="none" stroke="var(--warn)" stroke-width="1.5"/>
+          <text x="820" y="43" text-anchor="middle" font-size="13" font-weight="600" style="fill:var(--warn)">Tailscale</text>
+
+          <!-- legend -->
+          <g font-size="12">
+            <line x1="560" y1="300" x2="590" y2="300" class="flow"/><text class="sub" x="598" y="304">media flow</text>
+            <line x1="690" y1="300" x2="720" y2="300" class="tail"/><text class="sub" x="728" y="304">remote access</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="project-body">
+        <div>
+          <h4>Hardware</h4>
+          <table>
+            <thead><tr><th>Machine</th><th>Role</th></tr></thead>
+            <tbody>
+              <tr><td>Dell Inspiron 3668</td><td>Proxmox hypervisor, has a GPU for transcoding</td></tr>
+              <tr><td>Dell OptiPlex</td><td>OpenMediaVault NAS, storage only</td></tr>
+              <tr><td>HP ProDesk 400 G1 Mini</td><td>Rips Blu-rays and DVDs</td></tr>
+              <tr><td>Raspberry Pi × 2</td><td>Lightweight always-on services</td></tr>
+              <tr><td>Switch + Asus router</td><td>Managed switch on the home LAN</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>Roadmap</h4>
+          <ul class="roadmap">
+            <li>Add spare 2&nbsp;TB and 1&nbsp;TB drives to the NAS</li>
+            <li>VLANs on the managed switch</li>
+            <li>GPU hardware transcoding for Jellyfin</li>
+            <li>Put the Raspberry Pis to work (monitoring, DNS, backups)</li>
+            <li>Automated backups for Proxmox guests</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="decisions">
+        <div class="card"><h4>Storage separate from compute</h4>Media lives on its own NAS, so I can rebuild or snapshot Proxmox guests without ever risking the library.</div>
+        <div class="card"><h4>No open ports</h4>Tailscale gives every node a private name and address from anywhere, with nothing exposed on the router.</div>
+        <div class="card"><h4>Dedicated ripping box</h4>Ripping is slow and disk-heavy, so the ProDesk handles it and the hypervisor stays free for streaming.</div>
+      </div>
+
+      <div class="project-foot">
+        <a class="btn" href="https://github.com/DevB-afk/homelab">View the repo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience</h2>
+    <h3>Where I've worked</h3>
+    <div class="jobs">
+      <div class="card job">
+        <div class="job-top"><h4>IT Intern · Chester City Hall, IT Department</h4><span class="when">May – Jul 2025 · Chester, PA</span></div>
+        <ul>
+          <li>Configured and deployed a Cisco Meraki switch to build a sandbox for testing an internal phone service before rollout.</li>
+          <li>Resolved user support tickets, including an Adobe licensing and access issue, and kept documentation up to date.</li>
+          <li>Organized the server room to make space for additional server and networking equipment.</li>
+          <li>Produced a construction time-lapse video for City Hall's website showing progress on the new building.</li>
+        </ul>
+      </div>
+      <div class="card job">
+        <div class="job-top"><h4>Summer Intern · Monroe Energy, LLC</h4><span class="when">Jun – Aug 2024 · Marcus Hook, PA</span></div>
+        <ul>
+          <li>Conducted inventory audits and maintained accurate material records using Excel and Maximo.</li>
+          <li>Identified workflow inefficiencies and worked with the team to improve inventory tracking.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <h3>What I work with</h3>
+    <div class="skills">
+      <div class="card"><h4>Systems &amp; virtualization</h4><ul><li>Proxmox VE, VMware, VirtualBox</li><li>Windows 10/11, Windows Server (basic)</li><li>Ubuntu, Kali Linux</li><li>PowerShell &amp; Bash (basic)</li></ul></div>
+      <div class="card"><h4>Networking</h4><ul><li>TCP/IP, subnetting, DHCP, DNS, NAT</li><li>Switching (Cisco Meraki)</li><li>Tailscale, VPN fundamentals</li><li>Wireshark</li></ul></div>
+      <div class="card"><h4>Hardware &amp; support</h4><ul><li>PC building and diagnostics</li><li>Ticketing and documentation</li><li>Jellyfin, OpenMediaVault</li><li>Git / GitHub</li></ul></div>
+      <div class="card"><h4>Security</h4><ul><li>Kali Linux tools</li><li>nmap, network scanning</li><li>Vulnerability analysis</li><li>Hardening, SIEM fundamentals</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <span>© 2026 Devon Beaver-Byard</span>
+    <span>
+      <a href="mailto:dbeav1029@gmail.com">Email</a> ·
+      <a href="https://www.linkedin.com/in/devon-beaver-byard">LinkedIn</a> ·
+      <a href="resume.pdf">Resume</a> ·
+      <a href="https://github.com/DevB-afk">GitHub</a>
+    </span>
+  </div>
+</footer>
+
+</body>
+</html>
